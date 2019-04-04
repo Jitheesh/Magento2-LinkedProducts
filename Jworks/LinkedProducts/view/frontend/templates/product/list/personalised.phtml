@@ -1,0 +1,78 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block \Magento\Catalog\Block\Product\AbstractProduct */
+?>
+
+<?php
+
+if ($exist = $block->getItems()->getSize()) {
+    $type = 'personalised';
+    $class = $type;
+
+    $image = 'related_products_list';
+    $items = $block->getItems();
+    $limit = 0;
+    $shuffle = 0;
+    $canItemsAddToCart = $block->canItemsAddToCart();
+
+    $showAddTo = true;
+    $showCart = false;
+    $templateType = null;
+    $description = false;
+}
+?>
+
+<?php if ($exist):?>
+
+<div class="block <?= /* @escapeNotVerified */ $class ?>">
+
+    <div class="block-title title">
+        <strong id="block-<?= /* @escapeNotVerified */ $class ?>-heading" role="heading" aria-level="2"><?= /* @escapeNotVerified */ __('Choose your Shirt') ?></strong>
+    </div>
+    <div class="block-content content" aria-labelledby="block-<?= /* @escapeNotVerified */ $class ?>-heading">
+        <?php if ($type == 'personalised' && $canItemsAddToCart): ?>
+        <div class="block-actions">
+            <?= /* @escapeNotVerified */ __('Check items to add to the cart or') ?>
+            <button type="button" class="action select" role="select-all"><span><?= /* @escapeNotVerified */ __('select all') ?></span></button>
+        </div>
+        <?php endif; ?>
+        <div class="products wrapper grid products-grid products-<?= /* @escapeNotVerified */ $type ?>">
+            <ol class="products list items product-items">
+                <?php $iterator = 1; ?>
+
+                <?php foreach ($items as $_item): ?>
+                <?php $available = ''; ?>
+                <?php if (!$_item->isComposite() && $_item->isSaleable() && $type == 'personalised'): ?>
+                    <?php if (!$_item->getRequiredOptions()): ?>
+                        <?php $available = 'personalised-available'; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+                    <?= /* @escapeNotVerified */ ($iterator++ == 1) ? '<li class="item product product-item" >' : '</li><li class="item product product-item" >' ?>
+
+                <div class="product-item-info <?= /* @escapeNotVerified */ $available ?>">
+                    <?= /* @escapeNotVerified */ '<!-- ' . $image . '-->' ?>
+                    <a href="javascript:void(0)" class="product photo product-item-photo">
+                        <?= $block->getImage($_item, $image)->toHtml() ?>
+                    </a>
+                    <div class="product details product-item-details">
+                            <div style="display: none">
+                            <?= /* @escapeNotVerified */ $block->getProductPrice($_item) ?>
+                            </div>
+
+                        </div>
+                    </div>
+                    <?= ($iterator == count($items)+1) ? '</li>' : '' ?>
+
+                <?php endforeach ?>
+            </ol>
+        </div>
+    </div>
+</div>
+<?php endif;?>

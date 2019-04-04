@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * @category Jworks
+ * @package LinkedProducts
+ * @subpackage Config
+ * @author Jitheesh V O <jitheeshvo@gmail.com>
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <body>
+        <referenceContainer name="product.info.main">
+            <block class="Jworks\LinkedProducts\Block\Product\ProductList\Personalised" after="product.price.tier" name="catalog.product.personalised" template="Jworks_LinkedProducts::product/list/personalised.phtml">
+                <arguments>
+                    <argument name="type" xsi:type="string">personalised</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
